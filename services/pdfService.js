@@ -2,7 +2,7 @@ var PdfTable = require('voilab-pdf-table'),
     PdfDocument = require('pdfkit');
    
 module.exports = {
-    create: function (arr) {
+    create: function (positions) {
         // create a PDF from PDFKit, and a table from PDFTable
         var pdf = new PdfDocument({
                 autoFirstPage: false
@@ -89,7 +89,7 @@ module.exports = {
  
         // draw content, by passing data to the addBody method
         table.addBody(
-            arr
+            positions
         );
  
         return pdf;

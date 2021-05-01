@@ -254,6 +254,16 @@ const addNewPosition = async (type, email, id) => {
     }
 }
 
+const checkUsersWithFalsePosition = async (id) => {
+    try {
+        const usersWithFalsePositions = await userPositions.find({bonds: id});
+        return usersWithFalsePositions;
+    } catch(err) {
+        console.log(err);
+        throw err;
+    };
+};
+
 
 module.exports = { 
     getBond, 
@@ -275,5 +285,6 @@ module.exports = {
     getAllComodity,
     getAllRest,
     getAllCrypto,
-    getAllPairs
+    getAllPairs,
+    checkUsersWithFalsePosition
 }
