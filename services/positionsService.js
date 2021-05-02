@@ -278,10 +278,10 @@ const checkUsersWithFalsePosition = async (id) => {
 
 const refundUsers = async (usersArray) => {
     try {
-        const usersToRefund = await User.find({email: {$in: usersArray}})
+        console.log(usersArray)
+        const usersToRefund = await User.find({email: {$in: usersArray}});
         for(let i=0; i<usersToRefund.length; i++) {
-            const update = await User.updateOne({email: usersToRefund[i].email}, {credits: usersToRefund[i].credits+1})
-            console.log(update)
+            await User.updateOne({email: usersToRefund[i].email}, {$inc: {credits: 1}})
         }
         return usersToRefund
     } catch(err) {
