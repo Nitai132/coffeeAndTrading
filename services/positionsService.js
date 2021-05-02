@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const liveRateBondSchema = require('./../models/liveRateBonds.model');
 const usersPositionsSchema = require('./../models/usersPositions.model');
 const liveRateCryptoSchema = require('../models/liveRateCrypto.model');
+const userSchema = require('./../models/users.model');
 
 const userPositions = mongoose.model('userPositions', usersPositionsSchema, 'userspositions')
 const LiveRateBond = mongoose.model('LiveRateBond', liveRateBondSchema, 'liveRateBonds');
@@ -10,6 +11,8 @@ const LiveRateComodity = mongoose.model('LiveRateComodity', liveRateCryptoSchema
 const LiveRateCurrencyPair = mongoose.model('LiveRateCurrencyPair', liveRateCryptoSchema, 'liveRateCurrencyPairs1');
 const LiveRateRest = mongoose.model('LiveRateRest', liveRateCryptoSchema, 'liveRateRest');
 const LiveRateStock = mongoose.model('LiveRateStock', liveRateCryptoSchema, 'liveRateStocks');
+const User = mongoose.model('User', userSchema); //שימוש במודל וסכמה של משתמש
+
 
 
 const getBond = async (id) => {
@@ -256,8 +259,31 @@ const addNewPosition = async (type, email, id) => {
 
 const checkUsersWithFalsePosition = async (id) => {
     try {
-        const usersWithFalsePositions = await userPositions.find({bonds: id});
-        return usersWithFalsePositions;
+        const usersWithFalsePositions = await userPositions.find({
+            $or:[
+                {bonds: id},
+                {crypto: id},
+                {comodity: id},
+                {pairs: id},
+                {stocks: id},
+              ]
+        });
+        const usersArray = usersWithFalsePositions.map(({user}) => user)
+        return usersArray;
+    } catch(err) {
+        console.log(err);
+        throw err;
+    };
+};
+
+const refundUsers = async (usersArray) => {
+    try {
+        const usersToRefund = await User.find({email: {$in: usersArray}})
+        for(let i=0; i<usersToRefund.length; i++) {
+            const update = await User.updateOne({email: usersToRefund[i].email}, {credits: usersToRefund[i].credits+1})
+            console.log(update)
+        }
+        return usersToRefund
     } catch(err) {
         console.log(err);
         throw err;
@@ -286,5 +312,6 @@ module.exports = {
     getAllRest,
     getAllCrypto,
     getAllPairs,
-    checkUsersWithFalsePosition
+    checkUsersWithFalsePosition,
+    refundUsers
 }

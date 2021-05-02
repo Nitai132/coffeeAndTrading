@@ -22,7 +22,8 @@ const {
     getAllRest,
     getAllCrypto,
     getAllPairs,
-    checkUsersWithFalsePosition
+    checkUsersWithFalsePosition,
+    refundUsers
 } = require('../services/positionsService');
 
 router.get('/getBond/:id', async (req, res) => { 
@@ -243,7 +244,8 @@ router.post('/falsePosition', async (req, res) => {
     try {
         const { id } = req.body;
         const usersWithFalsePositions = await checkUsersWithFalsePosition(id);
-        return res.json(usersWithFalsePositions);
+        const refunds = await refundUsers(usersWithFalsePositions)
+        return res.json(refunds)
     } catch(err) {
         console.log(err);
         res.sendStatus(400);
