@@ -19,27 +19,28 @@ module.exports = {
             // set defaults to your columns
             .setColumnsDefaults({
                 headerBorder: 'B',
-                align: 'left'
+                align: 'left',
+                padding: [10, 0, 0, 0],
             })
             // add table columns
             .addColumns([
                 {
                     id: 'Num',
                     header: 'number',
-                    align: 'center',
+                    align: 'left',
                     width: 50,
                 },
                 {
                     id: 'Operation',
                     header: 'Operation',
                     width: 50,
-                    align: 'center',
+                    align: 'left',
                 },
                 {
                     id: 'StartDate',
                     header: 'StartDate',
                     width: 40,
-                    align: 'center',
+                    align: 'left',
                 },
                 {
                     id: 'EndDate',
@@ -51,31 +52,31 @@ module.exports = {
                     id: 'StartPrice',
                     header: 'StartPrice',
                     width: 70,
-                    align: 'center',
+                    align: 'left',
                 },
                 {
                     id: 'EndPrice',
                     header: 'EndPrice',
                     width: 70,
-                    align: 'center',
+                    align: 'left',
                 },
                 {
                     id: 'succeeded',
                     header: 'succeeded',
                     width: 70,
-                    align: 'center',
+                    align: 'left',
                 },
                 {
                     id: 'PipsesCents',
                     header: 'PipsesCents',
                     width: 70,
-                    align: 'center',
+                    align: 'left',
                 },
                 {
                     id: 'Precent',
                     header: 'Success rate (per page)',
                     width: 70,
-                    align: 'center',
+                    align: 'left',
                 },
 
             ])

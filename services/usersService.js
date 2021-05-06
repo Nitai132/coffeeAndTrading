@@ -55,4 +55,13 @@ const checkIfEmailExist = async (email) => {
     };
 };
 
-module.exports = { Signup, getAllUsers, getUserCredits, changeCredits, checkIfEmailExist }; //יצוא הפונקציות
+const deleteUser = async (id) => {
+    try {
+        return await User.deleteOne({_id: id})
+    } catch(err) {
+        console.log(err);
+        throw err;
+    };
+};
+
+module.exports = { Signup, getAllUsers, getUserCredits, changeCredits, checkIfEmailExist, deleteUser }; //יצוא הפונקציות

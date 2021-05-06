@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const {Signup, getAllUsers, getUserCredits, changeCredits, checkIfEmailExist} = require('../services/usersService');
+const {Signup, getAllUsers, getUserCredits, changeCredits, checkIfEmailExist, deleteUser} = require('../services/usersService');
 const { adminValidation } = require('../validations/adminValidation');
 const { isValid } = require('../passport');
 
@@ -77,6 +77,17 @@ router.post('/changeCredits', isValid,  async (req, res) => { //שינוי קר�
     } catch (err) {
         console.log(err);
         return res.sendStatus(400); //כשלון
+    };
+});
+
+router.delete('/deleteUser/:id', async (req, res) => {
+    try {
+        const {id} = req.params;
+        await deleteUser(id);
+        return res.sendStatus(200);
+    } catch(err) {
+        console.log(err);
+        return res.sendStatus(400);
     };
 });
 

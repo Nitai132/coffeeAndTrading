@@ -173,7 +173,9 @@ const getAllComodity = async() => {
 
 const getNewPairs = async (amount) => {
     try {
-        const getNewPairs = await LiveRateCurrencyPair.find()
+        const date = new Date()
+        const time = date.getTime()-(960000*4);
+        const getNewPairs = await LiveRateCurrencyPair.find({insertTime: { $gt: time}})
         .sort({insertTime: -1})
         .limit(5)
         const shuffledArray = getNewPairs.sort(() => 0.5 - Math.random());
