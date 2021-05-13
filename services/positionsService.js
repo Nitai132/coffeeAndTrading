@@ -261,6 +261,7 @@ const addNewPosition = async (type, email, id) => {
 
 const checkUsersWithFalsePosition = async (id) => {
     try {
+        console.log(id);
         const usersWithFalsePositions = await userPositions.find({
             $or:[
                 {bonds: id},
@@ -280,7 +281,7 @@ const checkUsersWithFalsePosition = async (id) => {
 
 const refundUsers = async (usersArray) => {
     try {
-        console.log(usersArray)
+        console.log(usersArray);
         const usersToRefund = await User.find({email: {$in: usersArray}});
         for(let i=0; i<usersToRefund.length; i++) {
             await User.updateOne({email: usersToRefund[i].email}, {$inc: {credits: 1}})
