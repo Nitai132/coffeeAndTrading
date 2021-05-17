@@ -66,7 +66,7 @@ const init = async () => { //פונקצייה חכמה שמוודאת התחבר
             useFindAndModify: false,
             useCreateIndex: true
         });
-        app.listen(process.env.PORT || 80, (err) => { //הפעלת השרת
+        app.listen(process.env.PORT || 4422, (err) => { //הפעלת השרת
             console.log('server is up');
         });
     } catch (err) { //במידה והתחברות נכשלה
