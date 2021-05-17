@@ -25,7 +25,7 @@ app.use(session({ //שימוש בקוקיז פספורט סשן
     resave: false,
     saveUninitialized: false,
     store: new MongoDBStore({   
-        uri: 'mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData', //סטרינג התחברות לדאטאבייס
+        uri: 'mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData?authSource=admin&readPreference=primary&appname=MongoDB%20Compass', //סטרינג התחברות לדאטאבייס
         collection: 'mySessions' //קולקשן סשנים
     }),
     cookie: { //הגדרות של קוקיז
@@ -60,7 +60,7 @@ app.get("/*", function(req, res) {
   
 const init = async () => { //פונקצייה חכמה שמוודאת התחברות לדאטא בייס לפני הפעלת השרת
     try {
-        await mongoose.connect('mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData', { //התחברות לדאטא בייס
+        await mongoose.connect('mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData?authSource=admin&readPreference=primary&appname=MongoDB%20Compass', { //התחברות לדאטא בייס
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false,
