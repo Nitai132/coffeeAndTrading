@@ -57,7 +57,7 @@ const checkIfEmailExist = async (email) => {
 
 const deleteUser = async (id) => {
     try {
-        return await User.deleteOne({_id: id})
+        return User.deleteOne({_id: id})
     } catch(err) {
         console.log(err);
         throw err;

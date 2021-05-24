@@ -80,7 +80,7 @@ router.post('/changeCredits', isValid,  async (req, res) => { //שינוי קר�
     };
 });
 
-router.delete('/deleteUser/:id', async (req, res) => {
+router.delete('/deleteUser/:id', adminValidation, async (req, res) => {
     try {
         const {id} = req.params;
         await deleteUser(id);
