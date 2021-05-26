@@ -10,7 +10,7 @@ const LiveRateCrypto = mongoose.model('LiveRateCrypto', liveRateCryptoSchema, 'l
 const LiveRateComodity = mongoose.model('LiveRateComodity', liveRateCryptoSchema, 'liveRateComodity');
 const LiveRateCurrencyPair = mongoose.model('LiveRateCurrencyPair', liveRateCryptoSchema, 'liveRateCurrencyPairs1');
 const LiveRateRest = mongoose.model('LiveRateRest', liveRateCryptoSchema, 'liveRateRest');
-const LiveRateStock = mongoose.model('LiveRateStock', liveRateCryptoSchema, 'liveRateStocks');
+const LiveRateStock = mongoose.model('LiveRateStock', liveRateCryptoSchema, 'iexStocks');
 const User = mongoose.model('User', userSchema); //שימוש במודל וסכמה של משתמש
 
 
@@ -175,7 +175,7 @@ const getNewPairs = async (amount) => {
     try {
         const date = new Date()
         const time = date.getTime()-(960000*4);
-        const getNewPairs = await LiveRateCurrencyPair.find({insertTime: { $gt: time}})
+        const getNewPairs = await LiveRateCurrencyPair.find({insertTime: { $gt: time-1}})
         .sort({insertTime: -1})
         .limit(5)
         const shuffledArray = getNewPairs.sort(() => 0.5 - Math.random());
@@ -199,24 +199,24 @@ const getAllPairs = async() => {
 
 const getNewStocks = async (amount, rate) => {
     try {
-        if (rate === 5) {
-            const getNewStocks = await LiveRateStock.find({ startPrice : { $gt :  5, $lt : 100}})
+        if (rate === '5') {
+            const getNewStocks = await LiveRateStock.find({ startPrice : { $gt :  4, $lt : 99}})
             .sort({insertTime: -1})
             .limit(5)
             const shuffledArray = getNewStocks.sort(() => 0.5 - Math.random());
             let selected = shuffledArray.slice(0, amount);
             return selected;
         }
-        if (rate === 100) {
-            const getNewStocks = await LiveRateStock.find({ startPrice : { $gt :  100, $lt : 200}})
+        if (rate === '100') {
+            const getNewStocks = await LiveRateStock.find({ startPrice : { $gt :  99, $lt : 199}})
             .sort({insertTime: -1})
             .limit(5)
             const shuffledArray = getNewStocks.sort(() => 0.5 - Math.random());
             let selected = shuffledArray.slice(0, amount);
             return selected;
         }
-        if (rate === 200) {
-            const getNewStocks = await LiveRateStock.find({ startPrice : { $gt :  200}})
+        if (rate === '200') {
+            const getNewStocks = await LiveRateStock.find({ startPrice : { $gt :  199}})
             .sort({insertTime: -1})
             .limit(5)
             const shuffledArray = getNewStocks.sort(() => 0.5 - Math.random());
