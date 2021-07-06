@@ -6,13 +6,13 @@ const User = mongoose.model('User', userSchema); //שימוש במודל וסכ�
 
 const UsersPosition = mongoose.model('UsersPosition', usersPositionSchema);
 
-const Signup = async ({firstName, lastName, phone, email, password}) => { //הרשמה למערכת 
+const Signup = async ({ firstName, lastName, phone, email, password }) => { //הרשמה למערכת 
     try {
-    const u = new User({firstName, lastName, email, phone, password, isAdmin: 0, credits: 0}); //יצירת משתמש חדש
-    const p = new UsersPosition({user: email, bonds: [], comodity: [], crypto: [], pairs: [], rest: [], stocks: []});
-    await u.save();
-    return await p.save(); //שמירת המשתמש בדאטאבייס
-    } catch(err) { //במקרה של כשלון
+        const u = new User({ firstName, lastName, email, phone, password, isAdmin: 0, credits: 0 }); //יצירת משתמש חדש
+        const p = new UsersPosition({ user: email, bonds: [], comodity: [], crypto: [], pairs: [], rest: [], stocks: [] });
+        await u.save();
+        return await p.save(); //שמירת המשתמש בדאטאבייס
+    } catch (err) { //במקרה של כשלון
         console.log(err);
         throw err;
     };
@@ -21,44 +21,46 @@ const Signup = async ({firstName, lastName, phone, email, password}) => { //הר
 const getAllUsers = async () => { //הצגת כל המשתמשים
     try {
         return User.find({}); //מביא את כל המשתמשים במערכת
-    } catch(err) { //במקרה של כשלון
+    } catch (err) { //במקרה של כשלון
         throw err;
     };
 };
 
 const getUserCredits = async (id) => { //בודק את כמות הקרדיט שיש למשתמש
     try {
-        return User.find({_id: id}); //מציג את הפרטים של המשתמש
-    } catch(err) { //במקרה של כשלון
+        return User.find({ _id: id }); //מציג את הפרטים של המשתמש
+    } catch (err) { //במקרה של כשלון
         throw err;
     };
 };
 
 const changeCredits = async (email, amount) => { //שינוי כמות הקרדיטים של משתמש
     try {
-        return User.updateOne({email: email}, { $set: { credits: amount }}) //משנה את הקרדיט של המשתמש לפי אימייל
-    } catch(err) { //במקרה של כשלון
+        return User.updateOne({ email: email }, { $set: { credits: amount } }) //משנה את הקרדיט של המשתמש לפי אימייל
+    } catch (err) { //במקרה של כשלון
         throw err;
     };
 };
 
+//סרביס שבודק אם האימייל כבר קיים במערכת בזמן ההרשמה לאתר
 const checkIfEmailExist = async (email) => {
     try {
-       const user =  await User.find({email: email});
-       if (user.length > 0) {
-           return true
-       }
-       return false
-    } catch(err) {
+        const user = await User.find({ email: email });
+        if (user.length > 0) {
+            return true
+        }
+        return false
+    } catch (err) {
         console.log(err);
         throw err;
     };
 };
 
+//סרביס בשביל האדמין שמוחק משתמשים
 const deleteUser = async (id) => {
     try {
-        return User.deleteOne({_id: id})
-    } catch(err) {
+        return User.deleteOne({ _id: id })
+    } catch (err) {
         console.log(err);
         throw err;
     };

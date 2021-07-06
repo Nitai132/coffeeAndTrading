@@ -5,11 +5,11 @@ const User = mongoose.model('User', userSchema); //שימוש בסכמה ומו�
 
 module.exports = {
     localStrategyHandler: async (email, password, done) => { //לוקאל סטרטג'י
-        const user = await User.findOne({email, password}); //מחפש את המשתמש בדאטא בייס
-            if (!user) {
-                return done(null, false); // במידה והמשתמש לא נמצא
-            }
-            return done(null, user); //במידה והמשתמש נמצא
+        const user = await User.findOne({ email, password }); //מחפש את המשתמש בדאטא בייס
+        if (!user) {
+            return done(null, false); // במידה והמשתמש לא נמצא
+        }
+        return done(null, user); //במידה והמשתמש נמצא
     },
     serializeUser: (user, done) => { //סיריאליזצייה
         done(null, user);

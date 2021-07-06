@@ -6,39 +6,31 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const {localStrategyHandler, serializeUser, deserializeUser, isValid} = require('./passport');
+const { localStrategyHandler, serializeUser, deserializeUser, isValid } = require('./passport');
 const fileUpload = require('express-fileupload');
 const UsersController = require('./controllers/usersController.js');
 const EmailsController = require('./controllers/emailsController');
 const positionsController = require('./controllers/positionsController');
 const pdfController = require('./controllers/pdfController')
 const path = require('path');
+const { mongoDBStoreConfig, cookiesConfig, mongooseConnection, passportConfig } = require('./config')
+const dbString = 'mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData?authSource=admin';
 
 app.use(express.json()); //שימוש בג'ייסון
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); //שימוש בקוקיז
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload()); //אפשרות להעלות קבצים
 
 app.use(session({ //שימוש בקוקיז פספורט סשן
-    secret: 'Jovani123!$@#$', //קוד סודי
+    secret: 'Jovani123!$@#$',
     resave: false,
     saveUninitialized: false,
-    store: new MongoDBStore({   
-        uri: 'mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData?authSource=admin', //סטרינג התחברות לדאטאבייס
-        collection: 'mySessions' //קולקשן סשנים
-    }),
-    cookie: { //הגדרות של קוקיז
-        secure: false,
-        httpOnly: false,
-        maxAge: 1000 * 60000
-    },
+    store: new MongoDBStore(mongoDBStoreConfig),
+    cookie: cookiesConfig,
 }));
 
-passport.use('local', new LocalStrategy(localStrategyHandler, { //שימוש בפספורט לוקאל
-    usernameField: 'email',
-    passwordField: 'password'
-  }));
+passport.use('local', new LocalStrategy(localStrategyHandler, passportConfig));
 passport.serializeUser(serializeUser); //סיריאלייז למשתמש
 passport.deserializeUser(deserializeUser); //דיסיריאלייז למשתמש
 
@@ -51,21 +43,16 @@ app.use('/emails', EmailsController); //API של הודעות
 app.use('/positions', positionsController);
 app.use('/pdf', pdfController);
 
-app.get("/*", function(req, res) {
+app.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "./public", "index.html"));
-  });
+});
 
 // app.use('*', isValid);
 
-  
+
 const init = async () => { //פונקצייה חכמה שמוודאת התחברות לדאטא בייס לפני הפעלת השרת
     try {
-        await mongoose.connect('mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData?authSource=admin', { //התחברות לדאטא בייס
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useFindAndModify: false,
-            useCreateIndex: true
-        });
+        await mongoose.connect(dbString, mongooseConnection);
         app.listen(process.env.PORT || 4422, (err) => { //הפעלת השרת
             console.log('server is up');
         });

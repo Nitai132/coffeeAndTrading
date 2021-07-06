@@ -1,28 +1,28 @@
 var PdfTable = require('voilab-pdf-table'),
     PdfDocument = require('pdfkit');
-   
+
 module.exports = {
     create: function (positions) {
-        // create a PDF from PDFKit, and a table from PDFTable
+        // מייצר פידיאף וטייבל
         var pdf = new PdfDocument({
-                autoFirstPage: false
-            }),
+            autoFirstPage: false
+        }),
             table = new PdfTable(pdf, {
                 bottomMargin: 30
             });
- 
+
         table
-            // add some plugins (here, a 'fit-to-width' for a column)
+            // הוספת פלאגין לסידור הרוחב
             .addPlugin(new (require('voilab-pdf-table/plugins/fitcolumn'))({
-              
+
             }))
-            // set defaults to your columns
+            // ערכים דיפולטיביים לעמודות
             .setColumnsDefaults({
                 headerBorder: 'B',
                 align: 'left',
                 padding: [10, 0, 0, 0],
             })
-            // add table columns
+            // עמודות של הטבלה
             .addColumns([
                 {
                     id: 'Num',
@@ -80,19 +80,19 @@ module.exports = {
                 },
 
             ])
-            // add events (here, we draw headers on each new page)
+            // הוספת כותרת לכל עמוד
             .onPageAdded(function (tb) {
                 tb.addHeader();
             });
- 
-        // if no page already exists in your PDF, do not forget to add one
+
+        // הוספת עמוד נוסף
         pdf.addPage();
- 
-        // draw content, by passing data to the addBody method
+
+        // הכנסת הפוזיציות לבודי של הטבלה
         table.addBody(
             positions
         );
- 
+
         return pdf;
     }
 }
