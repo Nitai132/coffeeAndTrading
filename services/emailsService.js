@@ -48,13 +48,13 @@ const sendRegisterationMail = async (email, username, password) => {
           var mailOptions = {
             from: 'tradingandcoffeeapplication@gmail.com',
             to: email,
-            subject: 'Welcome to Coffee & trading Application',
-            html: `<h3>welcome to trading and coffee application</h3> 
-            <br /> this is your login information: 
-            <br /> your username is: ${username} 
-            <br /> your password is: ${password}
+            subject: 'Welcome to Coffee & Trading Application',
+            html: `<h3>Welcome to Trading And coffee application</h3> 
+            <br /> This is your login information: 
+            <br /> Your username is: ${username} 
+            <br /> Your password is: ${password}
             <br/ > In addiction, this is a link to a guide that will help you understand how to use Trading and coffee systems.
-            <br /> please read it and if you have any other questions please contact us via Whatsapp or Email.
+            <br /> Please read it and if you have any other questions please contact us via Whatsapp or Email.
             <br> https://docs.google.com/document/d/1E0KdjXvAs7C6EPGDRsCPhPlHvYcXITe42m8CIRJmlas/edit?usp=sharing
             `
           };          

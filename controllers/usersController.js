@@ -43,6 +43,8 @@ router.post('/signup', async (req, res) => { //הרשמה למערכת API
 router.get('/allUsers', adminValidation, async (req, res) => { //מביא את כל המשתמשים במערכת API
     try {
         const allUsers = await getAllUsers(); //פונקצייה שמביאה את המשתמש מהדאטאבייס
+        console.log(allUsers)
+
         return res.json(allUsers); //מחזיר ג'ייסון של כל המשתמשים
     } catch (err) {
         console.log(err);
