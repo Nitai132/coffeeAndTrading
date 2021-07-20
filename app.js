@@ -14,7 +14,7 @@ const positionsController = require('./controllers/positionsController');
 const pdfController = require('./controllers/pdfController')
 const path = require('path');
 const { mongoDBStoreConfig, cookiesConfig, mongooseConnection, passportConfig } = require('./config')
-const dbString = 'mongodb+srv://jovany:Jj12345@cluster0.4mfvt.mongodb.net/TradingData';
+const dbString = 'mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData?authSource=admin';
 
 app.use(express.json()); //שימוש בג'ייסון
 app.use(express.urlencoded({ extended: true }));
