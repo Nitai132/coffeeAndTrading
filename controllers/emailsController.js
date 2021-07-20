@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { sendEmail, getAllEmail, deleteEmail, sendRegisterationMail } = require('../services/emailsService');
+const { sendEmail, getAllEmail, deleteEmail, sendRegisterationMail, sendPositionMail, sendClosePositionMail } = require('../services/emailsService');
 const { adminValidation } = require('../validations/adminValidation');
 
 //שליחת הודעה למערכת API
@@ -41,6 +41,28 @@ router.post('/sendRegisterationMail', async (req, res) => {
     try {
         const {email, username, password} = req.body;
         await sendRegisterationMail(email, username, password);
+        return res.sendStatus(200);
+    } catch(err) {
+        console.log(err);
+        return res.sendStatus(400);
+    };
+});
+
+router.post('/sendPositionMail', async (req, res) => {
+    try {
+        const {email, position} = req.body;
+        await sendPositionMail(email, position);
+        return res.sendStatus(200);
+    } catch(err) {
+        console.log(err);
+        return res.sendStatus(400);
+    };
+});
+
+router.post('/sendClosePositionMail', async (req, res) => {
+    try {
+        const {email, position} = req.body;
+        await sendClosePositionMail(email, position);
         return res.sendStatus(200);
     } catch(err) {
         console.log(err);

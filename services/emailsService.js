@@ -71,4 +71,89 @@ const sendRegisterationMail = async (email, username, password) => {
     }
 }
 
-module.exports = { sendEmail, getAllEmail, deleteEmail, sendRegisterationMail };
+const sendPositionMail = async (email, position) => {
+    try {
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        var transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+              user: 'tradingandcoffeeapplication@gmail.com',
+              pass: 'jabotinsky1644'
+            }
+          });
+          console.log(position);
+          var mailOptions = {
+            from: 'tradingandcoffeeapplication@gmail.com',
+            to: email,
+            subject: 'New Trading & Coffee Position Details',
+            html: `<h3>Your new position details: </h3> 
+            <br /> Symbol: ${position.symbol} 
+            <br /> Operation: ${position.operation} 
+            <br /> Start date: ${position.startDate}
+            <br /> Estimated End date: ${position.endDate}
+            <br /> Start Price: ${position.startPrice}
+            <br />
+            <br />
+            <h4>Incase the position will end up false the system will give you the credit back automaticaly.</h4>          
+            `
+          };          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+    } catch(err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+const sendClosePositionMail = async (email, position) => {
+    try {
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        var transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+              user: 'tradingandcoffeeapplication@gmail.com',
+              pass: 'jabotinsky1644'
+            }
+          });
+          console.log(position);
+          var mailOptions = {
+            from: 'tradingandcoffeeapplication@gmail.com',
+            to: email,
+            subject: 'Trading & Coffee Position Closed Details',
+            html: `<h3>Your closed position details: </h3> 
+            <br /> Symbol: ${position.symbol} 
+            <br /> Operation: ${position.operation} 
+            <br /> Start date: ${position.startDate}
+            <br /> End date: ${position.endDate}
+            <br /> Start Price: ${position.startPrice}
+            <br /> End Price: ${position.endPrice}
+            <br /> Success: ${position.succeeded}
+            <br /> Pipsed/Cents: ${position.pipsed}
+
+            `
+          };          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+    } catch(err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+module.exports = { sendEmail, getAllEmail, deleteEmail, sendRegisterationMail, sendPositionMail, sendClosePositionMail };
