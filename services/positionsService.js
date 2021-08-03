@@ -9,7 +9,7 @@ const LiveRateBond = mongoose.model('LiveRateBond', liveRateBondSchema, 'liveRat
 const LiveRateCrypto = mongoose.model('LiveRateCrypto', liveRateCryptoSchema, 'liveRateCrypto');
 const LiveRateComodity = mongoose.model('LiveRateComodity', liveRateCryptoSchema, 'liveRateComodity');
 const LiveRateCurrencyPair = mongoose.model('LiveRateCurrencyPair', liveRateCryptoSchema, 'liveRateCurrencyPairs1');
-const LiveRateRest = mongoose.model('LiveRateRest', liveRateCryptoSchema, 'Indexes');
+const LiveRateRest = mongoose.model('LiveRateRest', liveRateCryptoSchema, 'liveRateIndexes');
 const LiveRateStock = mongoose.model('LiveRateStock', liveRateCryptoSchema, 'iexStocks');
 const User = mongoose.model('User', userSchema); //שימוש במודל וסכמה של משתמש
 
@@ -84,8 +84,8 @@ const getStock = async (id) => {
 const getNewCrypto = async (amount) => {
     try {
         const date = new Date()
-        const time = date.getTime() - (960000 * 2);
-        const getNewCrypto = await LiveRateCrypto.find( {insertTime: { $gt: time} } ) // מוצא את הפוזיציות בשרת
+        const time = date.getTime() - (1740000);
+        const getNewCrypto = await LiveRateCrypto.find( {insertTime: { $gt: time} }  ) // מוצא את הפוזיציות בשרת
             .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
             .limit(5) // עד 5 פוזיציות
         const shuffledArray = getNewCrypto.sort(() => 0.5 - Math.random()); // רנדומציה למערך
@@ -112,7 +112,7 @@ const getAllCrypto = async () => {
 const getNewBonds = async (amount) => {
     try {
         const date = new Date()
-        const time = date.getTime() - (960000 * 2);
+        const time = date.getTime() - (1740000);
         const getNewBonds = await LiveRateBond.find( {insertTime: { $gt: time} } ) // מוצא את הפוזיציות בשרת
             .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
             .limit(5) // עד 5 פוזיציות
@@ -140,7 +140,7 @@ const getAllBonds = async () => {
 const getNewRest = async (amount) => {
     try {
         const date = new Date()
-        const time = date.getTime() - (960000 * 2);
+        const time = date.getTime() - (1740000);
         const getNewRest = await LiveRateRest.find( {insertTime: { $gt: time} } ) // מוצא את הפוזיציות בשרת
             .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
             .limit(5)  // עד 5 פוזיציות
@@ -168,12 +168,13 @@ const getAllRest = async () => {
 const getNewComodity = async (amount) => {
     try {
         const date = new Date()
-        const time = date.getTime() - (960000 * 2);
+        const time = date.getTime() - (1740000);
         const getNewComodity = await LiveRateComodity.find( {insertTime: { $gt: time} } ) // מוצא את הפוזיציות בשרת
             .sort({ insertTime: -1 })  // לפי הפוזיציות האחרונות שנבחרו
             .limit(5) // עד 5 פוזיציות
         const shuffledArray = getNewComodity.sort(() => 0.5 - Math.random());  // רנדומציה למערך
         let selected = shuffledArray.slice(0, amount); // סלייס לפי כמות הפוזיציות שהמשתמש רצה
+        console.log(selected);
         return selected;
     } catch (err) {
         console.log(err); // במקרה של כשלון
@@ -196,7 +197,7 @@ const getAllComodity = async () => {
 const getNewPairs = async (amount) => {
     try {
         const date = new Date()
-        const time = date.getTime() - (960000 * 2);
+        const time = date.getTime() - (1740000);
         const getNewPairs = await LiveRateCurrencyPair.find( {insertTime: { $gt: time} } ) // מוצא את הפוזיציות בשרת רק במידה ונוצרה ברבע שעה האחרונה
             .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
             .limit(5) // עד 5 פוזיציות
@@ -225,7 +226,7 @@ const getAllPairs = async () => {
 const getNewStocks = async (amount, rate) => {
     try {
         const date = new Date()
-        const time = date.getTime() - (960000 * 2);
+        const time = date.getTime() - (1740000);
         if (rate === '5') { // חלוקה לפי ערך המנייה - בין 5-99
             const getNewStocks = await LiveRateStock.find({ startPrice: { $gt: 4, $lt: 100 } }, {insertTime: { $gt: time} }) // מוצא את הפוזיציות בשרת
                 .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
