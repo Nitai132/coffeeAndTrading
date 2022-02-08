@@ -70,7 +70,7 @@ const init = async () => { //פונקצייה חכמה שמוודאת התחבר
     try {
         await mongoose.connect(dbString, mongooseConnection);
         app.listen(process.env.PORT || 4422, (err) => { //הפעלת השרת
-            console.log('server is up');
+            console.log(`server is up on port ${PORT}`);
         });
     } catch (err) { //במידה והתחברות נכשלה
         console.log(err);
