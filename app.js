@@ -12,6 +12,7 @@ const path = require('path');
 const http = require('http');
 const cors = require('cors');
 const { Server } = require('socket.io');
+const PORT = process.env.PORT || 4422;
 /**
  * controllers
  */
@@ -69,7 +70,7 @@ app.get("/*", function (req, res) {
 const init = async () => { //פונקצייה חכמה שמוודאת התחברות לדאטא בייס לפני הפעלת השרת
     try {
         await mongoose.connect(dbString, mongooseConnection);
-        app.listen(process.env.PORT || 4422, (err) => { //הפעלת השרת
+        app.listen(PORT, (err) => { //הפעלת השרת
             console.log(`server is up on port ${PORT}`);
         });
     } catch (err) { //במידה והתחברות נכשלה

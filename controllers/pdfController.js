@@ -6,6 +6,7 @@ const fs = require('fs')
 router.post('/downloadPage', async (req, res) => { 
     try {
         const { positions, email } = req.body;
+        console.log(positions);
         var pdf = require('../services/pdfService').create(positions); // יצירת הפידיאף
         pdf.end();
         pdf.pipe(fs.createWriteStream(`./public/usersPDF/${email}.pdf`)); // הכנסת הפידיאף לשרת

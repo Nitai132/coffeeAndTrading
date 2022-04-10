@@ -16,6 +16,86 @@ exports.connectToSocket = (io) => {
     });
 
 
+    LiveRateBond.watch([{
+        $match: {
+            $and: [
+                { "updateDescription.updatedFields.tp": { $gte: -1 } },
+                { operationType: "update" }]
+        }
+    }]).
+        on('change', data => {
+            console.log(data)
+            io.emit("react", ["TPupdated", data, 'bonds']);
+        });
+
+
+    LiveRateStock.watch([{
+        $match: {
+            $and: [
+                { "updateDescription.updatedFields.tp": { $gte: -1 } },
+                { operationType: "update" }]
+        }
+    }]).
+        on('change', data => {
+            console.log(data)
+            io.emit("react", ["TPupdated", data, 'stocks']);
+        });
+
+
+    LiveRateCrypto.watch([{
+        $match: {
+            $and: [
+                { "updateDescription.updatedFields.tp": { $gte: -1 } },
+                { operationType: "update" }]
+        }
+    }]).
+        on('change', data => {
+            console.log(data)
+            io.emit("react", ["TPupdated", data, 'crypto']);
+        });
+
+
+    LiveRateComodity.watch([{
+        $match: {
+            $and: [
+                { "updateDescription.updatedFields.tp": { $gte: -1 } },
+                { operationType: "update" }]
+        }
+    }]).
+        on('change', data => {
+            console.log(data)
+            io.emit("react", ["TPupdated", data, 'comodity']);
+        });
+
+
+    LiveRateCurrencyPair.watch([{
+        $match: {
+            $and: [
+                { "updateDescription.updatedFields.tp": { $gte: -1 } },
+                { operationType: "update" }]
+        }
+    }]).
+        on('change', data => {
+            console.log(data)
+            io.emit("react", ["TPupdated", data, 'pairs']);
+        });
+
+
+
+    LiveRateRest.watch([{
+        $match: {
+            $and: [
+                { "updateDescription.updatedFields.tp": { $gte: -1 } },
+                { operationType: "update" }]
+        }
+    }]).
+        on('change', data => {
+            console.log(data)
+            io.emit("react", ["TPupdated", data, 'rest']);
+        });
+
+
+
     LiveRateStock.watch([{
         $match: {
             $and: [
