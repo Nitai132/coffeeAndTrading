@@ -85,7 +85,7 @@ const getNewCrypto = async (amount) => {
     try {
         const date = new Date()
         const time = date.getTime() - (1740000);
-        const getNewCrypto = await LiveRateCrypto.find( {insertTime: { $gt: time} }  ) // מוצא את הפוזיציות בשרת
+        const getNewCrypto = await LiveRateCrypto.find() // מוצא את הפוזיציות בשרת
             .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
             .limit(5) // עד 5 פוזיציות
         const shuffledArray = getNewCrypto.sort(() => 0.5 - Math.random()); // רנדומציה למערך
@@ -113,7 +113,7 @@ const getNewBonds = async (amount) => {
     try {
         const date = new Date()
         const time = date.getTime() - (1740000);
-        const getNewBonds = await LiveRateBond.find( {insertTime: { $gt: time} } ) // מוצא את הפוזיציות בשרת
+        const getNewBonds = await LiveRateBond.find() // מוצא את הפוזיציות בשרת
             .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
             .limit(5) // עד 5 פוזיציות
         const shuffledArray = getNewBonds.sort(() => 0.5 - Math.random()); // רנדומציה למערך
@@ -141,7 +141,7 @@ const getNewRest = async (amount) => {
     try {
         const date = new Date()
         const time = date.getTime() - (1740000);
-        const getNewRest = await LiveRateRest.find( {insertTime: { $gt: time} } ) // מוצא את הפוזיציות בשרת
+        const getNewRest = await LiveRateRest.find() // מוצא את הפוזיציות בשרת
             .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
             .limit(5)  // עד 5 פוזיציות
         const shuffledArray = getNewRest.sort(() => 0.5 - Math.random()); // רנדומציה למערך
@@ -169,7 +169,7 @@ const getNewComodity = async (amount) => {
     try {
         const date = new Date()
         const time = date.getTime() - (1740000);
-        const getNewComodity = await LiveRateComodity.find( {insertTime: { $gt: time} } ) // מוצא את הפוזיציות בשרת
+        const getNewComodity = await LiveRateComodity.find() // מוצא את הפוזיציות בשרת
             .sort({ insertTime: -1 })  // לפי הפוזיציות האחרונות שנבחרו
             .limit(5) // עד 5 פוזיציות
         const shuffledArray = getNewComodity.sort(() => 0.5 - Math.random());  // רנדומציה למערך
@@ -198,7 +198,7 @@ const getNewPairs = async (amount) => {
     try {
         const date = new Date()
         const time = date.getTime() - (1740000);
-        const getNewPairs = await LiveRateCurrencyPair.find( {insertTime: { $gt: time} } ) // מוצא את הפוזיציות בשרת רק במידה ונוצרה ברבע שעה האחרונה
+        const getNewPairs = await LiveRateCurrencyPair.find() // מוצא את הפוזיציות בשרת רק במידה ונוצרה ברבע שעה האחרונה
             .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
             .limit(5) // עד 5 פוזיציות
         const shuffledArray = getNewPairs.sort(() => 0.5 - Math.random()); // רנדומציה למערך
@@ -228,7 +228,7 @@ const getNewStocks = async (amount, rate) => {
         const date = new Date()
         const time = date.getTime() - (1740000);
         if (rate === '5') { // חלוקה לפי ערך המנייה - בין 5-99
-            const getNewStocks = await LiveRateStock.find({ startPrice: { $gt: 4, $lt: 100 } }, {insertTime: { $gt: time} }) // מוצא את הפוזיציות בשרת
+            const getNewStocks = await LiveRateStock.find({ startPrice: { $gt: 4, $lt: 100 }}) // מוצא את הפוזיציות בשרת
                 .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
                 .limit(5) // עד 5 פוזיציות
             const shuffledArray = getNewStocks.sort(() => 0.5 - Math.random()); // רנדומציה למערך
@@ -236,7 +236,7 @@ const getNewStocks = async (amount, rate) => {
             return selected;
         }
         if (rate === '100') { // חלוקה לפי ערך המנייה - בין 100-199
-            const getNewStocks = await LiveRateStock.find({ startPrice: { $gt: 99, $lt: 200 } }, {insertTime: { $gt: time} }) // מוצא את הפוזיציות בשרת
+            const getNewStocks = await LiveRateStock.find({ startPrice: { $gt: 99, $lt: 200 } }) // מוצא את הפוזיציות בשרת
                 .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
                 .limit(5) // עד 5 פוזיציות
             const shuffledArray = getNewStocks.sort(() => 0.5 - Math.random()); // רנדומציה למערך
@@ -244,7 +244,7 @@ const getNewStocks = async (amount, rate) => {
             return selected;
         }
         if (rate === '200') { // חלוקה לפי ערך המנייה - 200 פלוס
-            const getNewStocks = await LiveRateStock.find({ startPrice: { $gt: 199 } }, {insertTime: { $gt: time } })  // מוצא את הפוזיציות בשרת
+            const getNewStocks = await LiveRateStock.find({ startPrice: { $gt: 199 } })  // מוצא את הפוזיציות בשרת
                 .sort({ insertTime: -1 }) // לפי הפוזיציות האחרונות שנבחרו
                 .limit(5) // עד 5 פוזיציות
             const shuffledArray = getNewStocks.sort(() => 0.5 - Math.random());  // רנדומציה למערך
