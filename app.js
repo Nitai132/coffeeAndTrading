@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser')
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const passport = require('passport');
@@ -20,7 +21,7 @@ const UsersController = require('./controllers/usersController.js');
 const EmailsController = require('./controllers/emailsController');
 const positionsController = require('./controllers/positionsController');
 const pdfController = require('./controllers/pdfController');
-
+const reportsController = require('./controllers/reportsController');
 /**
  * services
  */
@@ -33,8 +34,8 @@ const { mongoDBStoreConfig, cookiesConfig, mongooseConnection, passportConfig } 
 const dbString = 'mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData?authSource=admin';
 
 app.use(cors());
-app.use(express.json()); //שימוש בג'ייסון
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser()); //שימוש בקוקיז
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload()); //אפשרות להעלות קבצים
@@ -59,7 +60,7 @@ app.use('/auth', UsersController); // API של משתמשים
 app.use('/emails', EmailsController); //API של הודעות
 app.use('/positions', positionsController);
 app.use('/pdf', pdfController);
-
+app.use('/reports', reportsController);
 app.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "./public", "index.html"));
 });
