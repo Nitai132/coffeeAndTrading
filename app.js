@@ -31,8 +31,8 @@ const socketService = require('./services/socket/socketServices');
  * connect to db
  */
 const { mongoDBStoreConfig, cookiesConfig, mongooseConnection, passportConfig } = require('./config')
-const dbString = 'mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData?authSource=admin';
-
+// const dbString = 'mongodb://adminnew:x8engX86cy8B@80.179.152.210:27018/TradingData?authSource=admin';
+const dbString = 'mongodb+srv://jovany:Jj12345@cluster0.4mfvt.mongodb.net/TradingData'
 app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));

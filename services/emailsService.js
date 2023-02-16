@@ -35,18 +35,18 @@ const deleteEmail = async (id) => { //מחיקת אימייל
 const sendRegisterationMail = async (email, username, password) => {
     try {
         var transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 587,
-            secure: false,
-            requireTLS: true,
+            host: 'box2539.bluehost.com',
+            port: 465,
+            secure: true,
             auth: {
-              user: 'tradingandcoffeeapplication@gmail.com',
-              pass: 'jabotinsky1644'
-            }
+              user: 'donotreply@tradingandcoffeeapplication.com',
+              pass: 'JOVANYFOREVEr34189696#@#'
+            },
+            tls : { rejectUnauthorized: false }
           });
           
           var mailOptions = {
-            from: 'tradingandcoffeeapplication@gmail.com',
+            from: 'donotreply@tradingandcoffeeapplication.com',
             to: email,
             subject: 'Welcome to Coffee & Trading Application',
             html: `<h3>Welcome to Trading And coffee application</h3> 
@@ -75,18 +75,18 @@ const sendPositionMail = async (email, position) => {
     try {
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
         var transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 587,
-            secure: false,
-            requireTLS: true,
-            auth: {
-              user: 'tradingandcoffeeapplication@gmail.com',
-              pass: 'jabotinsky1644'
-            }
+          host: 'box2539.bluehost.com',
+          port: 465,
+          secure: true,
+          auth: {
+            user: 'donotreply@tradingandcoffeeapplication.com',
+            pass: 'JOVANYFOREVEr34189696#@#'
+          },
+          tls : { rejectUnauthorized: false }
           });
           console.log(position);
           var mailOptions = {
-            from: 'tradingandcoffeeapplication@gmail.com',
+            from: 'donotreply@tradingandcoffeeapplication.com',
             to: email,
             subject: 'New Trading & Coffee Position Details',
             html: `<h3>Your new position details: </h3> 
@@ -117,18 +117,18 @@ const sendClosePositionMail = async (email, position) => {
     try {
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
         var transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 587,
-            secure: false,
-            requireTLS: true,
-            auth: {
-              user: 'tradingandcoffeeapplication@gmail.com',
-              pass: 'jabotinsky1644'
-            }
+          host: 'box2539.bluehost.com',
+          port: 465,
+          secure: true,
+          auth: {
+            user: 'donotreply@tradingandcoffeeapplication.com',
+            pass: 'JOVANYFOREVEr34189696#@#'
+          },
+          tls : { rejectUnauthorized: false }
           });
           console.log(position);
           var mailOptions = {
-            from: 'tradingandcoffeeapplication@gmail.com',
+            from: 'donotreply@tradingandcoffeeapplication.com',
             to: email,
             subject: 'Trading & Coffee Position Closed Details',
             html: `<h3>Your closed position details: </h3> 

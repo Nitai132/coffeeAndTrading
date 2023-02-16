@@ -33,7 +33,7 @@ const LiveRateRest = mongoose.model(
 const LiveRateStock = mongoose.model(
   "LiveRateStock",
   liveRateCryptoSchema,
-  "iexStocks"
+  "liveRateStocks"
 );
 
 const UserPositions = mongoose.model(
